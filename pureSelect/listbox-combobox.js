@@ -54,7 +54,7 @@ aria.ListboxCombobox.prototype.setupEvents = function () {
   this.input.addEventListener('keyup', this.checkKey.bind(this));
   this.input.addEventListener('keydown', this.setActiveItem.bind(this));
   this.input.addEventListener('focus', this.checkShow.bind(this));
-  this.input.addEventListener('blur', this.checkSelection.bind(this));
+  // this.input.addEventListener('blur', this.checkSelection.bind(this));
   this.listbox.addEventListener('click', this.clickItem.bind(this));
 };
 

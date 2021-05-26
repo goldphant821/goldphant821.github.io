@@ -98,15 +98,15 @@ class VehicleSelector {
   constructor(params) {
     this.yearSelect = this.yearSelect.bind(this);
     this.markSelect = this.markSelect.bind(this);
-    this.methodSelect = this.methodSelect.bind(this);
+    this.modelSelect = this.modelSelect.bind(this);
     this.yearSelContainerId = `${params.yearSelId}-container`;
     this.markSelContainerId = `${params.markSelId}-container`;
-    this.methodSelContainerId = `${params.methodSelId}-container`;
+    this.modelSelContainerId = `${params.modelSelId}-container`;
     this.yearSel = new VehicleSelComboItem(params.yearSelId, this.yearSelect);
     this.markSel = new VehicleSelComboItem(params.markSelId, this.markSelect);
-    this.methodSel = new VehicleSelComboItem(params.methodSelId, this.methodSelect);
+    this.modelSel = new VehicleSelComboItem(params.modelSelId, this.modelSelect);
     document.getElementById(this.markSelContainerId).classList.add("vehicle_container--hidden");
-    document.getElementById(this.methodSelContainerId).classList.add("vehicle_container--hidden");
+    document.getElementById(this.modelSelContainerId).classList.add("vehicle_container--hidden");
     this.yearSel.fetchData('https://www.partsgeek.com/ajax/?ac=gys', params.year ? params.year : '');
 
     this.selectedYear;
@@ -116,17 +116,17 @@ class VehicleSelector {
   yearSelect(year) {
     this.selectedYear = year;
     document.getElementById(this.markSelContainerId).classList.add("vehicle_container--hidden");
-    document.getElementById(this.methodSelContainerId).classList.add("vehicle_container--hidden");
+    document.getElementById(this.modelSelContainerId).classList.add("vehicle_container--hidden");
     this.markSel.fetchData(`https://www.partsgeek.com/ajax/?ac=gmby&year=${year}`, '');
 
   }
   markSelect(mark) {
     this.selectedMark = mark;
-    document.getElementById(this.methodSelContainerId).classList.add("vehicle_container--hidden");
-    this.methodSel.fetchData(`https://www.partsgeek.com/ajax/?ac=gmbym&year=${this.selectedYear}&mark=${mark}`, '');
+    document.getElementById(this.modelSelContainerId).classList.add("vehicle_container--hidden");
+    this.modelSel.fetchData(`https://www.partsgeek.com/ajax/?ac=gmbym&year=${this.selectedYear}&mark=${mark}`, '');
   }
-  methodSelect(method) {
-
+  modelSelect(method) {
+    location.href = `https://www.partsgeek.com/ym/?year=${this.selectedYear}&mark=${this.selectedMark}&model=${method}`;
   }
 }
 
@@ -138,7 +138,7 @@ window.addEventListener('load', function () {
   var _vehicleYearCombo = new VehicleSelector({
     yearSelId: 'vehicle_year',
     markSelId: 'vehicle_mark',
-    methodSelId: 'vehicle_method',
+    modelSelId: 'vehicle_model',
     year: '',
     mark: '',
     method: '',
