@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <title>Pure Javascript Combo Box</title>
+    <link rel="stylesheet" href="combobox-1.1.css">
+</head>
+
+<body>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <div class="vehicle_selector--container">
+        <span class="sel-title">Select Your Vehicle</span>
+        <div class="combobox-wrapper">
+            <div role="combobox" aria-expanded="false" aria-owns="vehicle_year-listbox" aria-haspopup="listbox"
+                id="vehicle_year-combobox">
+                <input type="text" aria-autocomplete="both" aria-controls="vehicle_year-listbox"
+                    aria-labelledby="vehicle_year-label" id="vehicle_year-input">
+                <div class="combobox-dropdown" id="vehicle_year-combobox-arrow" tabindex="-1" role="button"
+                    aria-label="Show vegetable options">
+                    <img src="arrow_drop_down_grey_27x27.png" alt="">
+                </div>
+            </div>
+            <ul role="listbox" id="vehicle_year-listbox" class="listbox hidden">
+            </ul>
+        </div>
+        <div class="combobox-wrapper">
+            <div role="combobox" aria-expanded="false" aria-owns="vehicle_mark-listbox" aria-haspopup="listbox"
+                id="vehicle_mark-combobox">
+                <input type="text" aria-autocomplete="both" aria-controls="vehicle_mark-listbox"
+                    aria-labelledby="vehicle_mark-label" id="vehicle_mark-input">
+                <div class="combobox-dropdown" id="vehicle_mark-combobox-arrow" tabindex="-1" role="button"
+                    aria-label="Show vegetable options">
+                    <img src="arrow_drop_down_grey_27x27.png" alt="">
+                </div>
+            </div>
+            <ul role="listbox" id="vehicle_mark-listbox" class="listbox hidden">
+            </ul>
+        </div>
+        <div class="combobox-wrapper">
+            <div role="combobox" aria-expanded="false" aria-owns="vehicle_method-listbox" aria-haspopup="listbox"
+                id="vehicle_method-combobox">
+                <input type="text" aria-autocomplete="both" aria-controls="vehicle_method-listbox"
+                    aria-labelledby="vehicle_method-label" id="vehicle_method-input">
+                <div class="combobox-dropdown" id="vehicle_method-combobox-arrow" tabindex="-1" role="button"
+                    aria-label="Show vegetable options">
+                    <img src="arrow_drop_down_grey_27x27.png" alt="">
+                </div>
+            </div>
+            <ul role="listbox" id="vehicle_method-listbox" class="listbox hidden">
+            </ul>
+        </div>
+    </div>
+    <script src="utils.js"></script>
+    <script src="listbox-combobox.js"></script>
+    <script src="vehicle_selector.js"></script>
+</body>
+
+</html>
