@@ -5,26 +5,30 @@
 * ARIA Combobox Examples
 */
 class VehicleSelComboItem {
-  constructor(Id) {
+  constructor(Id, _onSelect) {
     this.id = Id;
     this.comboboxId = `${this.id}-combobox`;
     this.inputId = `${this.id}-input`;
     this.listBoxId = `${this.id}-listbox`;
     this.arrowId = `${this.id}-combobox-arrow`;
+    this.containerId = `${this.id}-container`;
     this.lists = [];
     this.searchVeggies = this.searchVeggies.bind(this);
     this.onShow = this.onShow.bind(this);
     this.onHide = this.onHide.bind(this);
+    this.onSelect = _onSelect || function () { };
     this.arrowOnClick = this.arrowOnClick.bind(this);
     this.setLists = this.setLists.bind(this);
     this.listBoxCombo = new aria.ListboxCombobox(
       document.getElementById(this.comboboxId),
       document.getElementById(this.inputId),
       document.getElementById(this.listBoxId),
+      document.getElementById(this.containerId),
       this.searchVeggies,
       true,
       this.onShow,
-      this.onHide
+      this.onHide,
+      this.onSelect
     );
     document.getElementById(this.arrowId).addEventListener(
       'click',
@@ -82,6 +86,9 @@ class VehicleSelComboItem {
       var data = await response.text();
       var res = data ? data.split('@') : [];
       this.setLists(res);
+      if (res && res.length > 0) {
+        document.getElementById(`${this.id}-container`).classList.remove("vehicle_container--hidden");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -89,50 +96,39 @@ class VehicleSelComboItem {
 }
 class VehicleSelector {
   constructor(params) {
-    this.yearSel = new VehicleSelComboItem(params.yearSelId);
-    this.markSel = new VehicleSelComboItem(params.markSelId);
-    this.methodSel = new VehicleSelComboItem(params.methodSelId);
-    this.yearSel.fetchData('https://www.partsgeek.com/ajax/?ac=gys', params.year ? params.year : '');
     this.yearSelect = this.yearSelect.bind(this);
     this.markSelect = this.markSelect.bind(this);
     this.methodSelect = this.methodSelect.bind(this);
+    this.yearSelContainerId = `${params.yearSelId}-container`;
+    this.markSelContainerId = `${params.markSelId}-container`;
+    this.methodSelContainerId = `${params.methodSelId}-container`;
+    this.yearSel = new VehicleSelComboItem(params.yearSelId, this.yearSelect);
+    this.markSel = new VehicleSelComboItem(params.markSelId, this.markSelect);
+    this.methodSel = new VehicleSelComboItem(params.methodSelId, this.methodSelect);
+    document.getElementById(this.markSelContainerId).classList.add("vehicle_container--hidden");
+    document.getElementById(this.methodSelContainerId).classList.add("vehicle_container--hidden");
+    this.yearSel.fetchData('https://www.partsgeek.com/ajax/?ac=gys', params.year ? params.year : '');
+
     this.selectedYear;
     this.selectedMark;
     this.selectedMethod;
   }
   yearSelect(year) {
+    this.selectedYear = year;
+    document.getElementById(this.markSelContainerId).classList.add("vehicle_container--hidden");
+    document.getElementById(this.methodSelContainerId).classList.add("vehicle_container--hidden");
+    this.markSel.fetchData(`https://www.partsgeek.com/ajax/?ac=gmby&year=${year}`, '');
 
   }
   markSelect(mark) {
-
+    this.selectedMark = mark;
+    document.getElementById(this.methodSelContainerId).classList.add("vehicle_container--hidden");
+    this.methodSel.fetchData(`https://www.partsgeek.com/ajax/?ac=gmbym&year=${this.selectedYear}&mark=${mark}`, '');
   }
   methodSelect(method) {
 
   }
 }
-var FRUITS_AND_VEGGIES = [
-  'Apple',
-  'Artichoke',
-  'Asparagus',
-  'Banana',
-  'Beets',
-  'Bell pepper',
-  'Broccoli',
-  'Brussels sprout',
-  'Cabbage',
-  'Carrot',
-  'Cauliflower',
-  'Celery',
-  'Chard',
-  'Chicory',
-  'Corn',
-  'Cucumber',
-  'Daikon',
-  'Date',
-  'Edamame',
-  'Eggplant',
-  'Elderberry'
-];
 
 /**
  * @function onload

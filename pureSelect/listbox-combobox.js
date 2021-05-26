@@ -24,18 +24,22 @@ aria.ListboxCombobox = function (
   comboboxNode,
   input,
   listbox,
+  container,
   searchFn,
   shouldAutoSelect,
   onShow,
-  onHide
+  onHide,
+  onSelect
 ) {
   this.combobox = comboboxNode;
   this.input = input;
   this.listbox = listbox;
+  this.container = container;
   this.searchFn = searchFn;
   this.shouldAutoSelect = shouldAutoSelect;
   this.onShow = onShow || function () { };
   this.onHide = onHide || function () { };
+  this.onSelect = onSelect || function () { };
   this.activeIndex = -1;
   this.resultsCount = 0;
   this.shown = false;
@@ -165,7 +169,7 @@ aria.ListboxCombobox.prototype.setActiveItem = function (evt) {
       return;
   }
 
-  evt.preventDefault();
+  // evt.preventDefault();
 
   activeItem = this.getItemAt(activeIndex);
   this.activeIndex = activeIndex;
@@ -199,9 +203,10 @@ aria.ListboxCombobox.prototype.getItemAt = function (index) {
 };
 
 aria.ListboxCombobox.prototype.clickItem = function (evt) {
-  console.log(evt)
+  console.log('clickitem')
   if (evt.target && evt.target.nodeName == 'LI') {
     this.selectItem(evt.target);
+
   }
 };
 
@@ -209,6 +214,7 @@ aria.ListboxCombobox.prototype.selectItem = function (item) {
   if (item) {
     this.input.value = item.innerText;
     this.hideListbox();
+    this.onSelect(item.innerText);
   }
 };
 
@@ -217,7 +223,8 @@ aria.ListboxCombobox.prototype.checkShow = function (evt) {
 };
 
 aria.ListboxCombobox.prototype.checkHide = function (evt) {
-  if (evt.target === this.input || this.combobox.contains(evt.target)) {
+  console.log('checkhide');
+  if (evt.target === this.input || this.container.contains(evt.target)) {
     return;
   }
   this.hideListbox();

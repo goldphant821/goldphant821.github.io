@@ -1,11 +1,17 @@
 .vehicle_selector--container{
-  padding: 10px;
+  padding: 15px;
   background-color:dodgerblue;
-  border-radius:10px;
+  border-radius:15px;
+  min-width: 761px;
+  box-shadow: 2px 2px 6px white;
 }
 .vehicle_selector--container .sel-title{
   color:white;
   font-weight: bold;
+  margin-right: 15px;
+}
+.vehicle_container--hidden{
+  display:none !important;
 }
 .annotate {
   font-style: italic;
@@ -27,7 +33,10 @@
   font-weight: bold;
   margin-right: 5px;
 }
-
+.listbox{
+  max-height: 200px;
+  overflow-y: auto;
+}
 .listbox,
 .grid {
   min-width: 230px;
@@ -44,6 +53,7 @@
 .listbox .result {
   cursor: default;
   margin: 0;
+
 }
 
 .grid .result-row {
